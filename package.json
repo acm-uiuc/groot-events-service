@@ -1,0 +1,25 @@
+{
+  "name": "groot-events-service",
+  "version": "1.0.0",
+  "description": "An Events service for groot",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Sameet Sapra",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "path": "^0.12.7",
+    "request": "^2.76.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acm-uiuc/groot-events-service.git"
+  },
+  "bugs": {
+    "url": "https://github.com/acm-uiuc/groot-events-service/issues"
+  },
+  "homepage": "https://github.com/acm-uiuc/groot-events-service#readme"
+}
