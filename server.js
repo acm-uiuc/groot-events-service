@@ -11,13 +11,14 @@
 const path = require("path");
 require('dotenv').config({path: path.resolve(__dirname) + '/.env'});
 const PORT = 8002;
-const express = require('express');
-const app = express();
+const app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 const request = require('request');
 
-app.use(bodyParser.json());       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
   extended: true
 }));
 
@@ -37,7 +38,6 @@ function getPageAccessToken(callback) {
         }
       });
     }
-    console.log("The page access token isn't an admin of the page " + PAGE_ID);
   });
 }
 
@@ -50,14 +50,26 @@ function getRawEvents(page_access_token, callback) {
     if (response && response.statusCode == 200) {
       callback(body.events.data);
     }
-  })
+  });
+}
+
+function getEvents(callback) {
+  getPageAccessToken(function(page_access_token) { 
+    getRawEvents(page_access_token, function(raw_events) { 
+      callback(raw_events);
+    });
+  });
 }
 
 app.get('/events', function(req, res) {
-  getPageAccessToken(function(page_access_token) { 
-    getRawEvents(page_access_token, function(raw_events) { 
-      res.json(raw_events);
-    });
+  getEvents(function(events) {
+    res.json(events);
+  });
+});
+
+io.on('connection', function (socket) {
+  getEvents(function(events) { 
+    socket.emit('facebook events', events);
   });
 });
 
@@ -66,7 +78,7 @@ if (!ACCESS_TOKEN) {
 } else if (!PAGE_ID) {
   console.log("ERROR! PAGE ID not supplied");
 } else {
-  app.listen(PORT);
+  server.listen(PORT);
   console.log("Your Facebook Page Access Token and Page ID are present");
   console.log('GROOT EVENTS SERVICES is live on port ' + PORT + "!");
 }
