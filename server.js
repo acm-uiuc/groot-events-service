@@ -23,10 +23,11 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 const ACCESS_TOKEN = process.env.FACEBOOK_ACCESS_TOKEN;
 const PAGE_ID = process.env.FACEBOOK_ACM_PAGE_ID;
+const USER_ID = process.env.FACEBOOK_USER_ID || 'me';
 
 function getPageAccessToken(callback) {
   request({
-    url: 'https://graph.facebook.com/me/accounts?access_token=' + ACCESS_TOKEN,
+    url: 'https://graph.facebook.com/' + USER_ID + '/accounts?access_token=' + ACCESS_TOKEN,
     method: 'GET',
     json: true
   }, function(error, response, body) { 
@@ -37,7 +38,10 @@ function getPageAccessToken(callback) {
         }
       });
     }
-    console.log("The page access token isn't an admin of the page " + PAGE_ID);
+    else{
+      console.log("The page access token isn't an admin of the page " + PAGE_ID);
+      console.log("Response:\n" + body)
+    }
   });
 }
 
