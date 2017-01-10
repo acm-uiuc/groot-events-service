@@ -8,3 +8,12 @@
 4. Fill in `.env`.
 5. `npm start`.
 
+## Routes
+
+`GET /events`
+
+- Returns all events in chronological order, with formatted start and end dates.
+
+`GET /events/upcoming`
+
+- Returns all upcoming events in chronological order, with formatted start and end dates.
