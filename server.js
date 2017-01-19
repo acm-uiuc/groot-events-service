@@ -15,10 +15,19 @@ var io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 const request = require('request');
 const facebook = require('./facebook.js');
+const winston = require('winston');
+const expressWinston = require('express-winston');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
+}));
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.Console()
+  ],
+  meta: false, // don't log metadata about requests (produces very messy logs if true)
+  expressFormat: true, // Use the default Express/morgan request formatting.
 }));
 
 app.get('/events', function(req, res) {
