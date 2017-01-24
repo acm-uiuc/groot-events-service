@@ -55,6 +55,7 @@ io.on('connection', function (socket) {
     socket.emit('facebook events', events);
   });
 });
+/*
 process.on('uncaughtException', function (err) {
   if(process.env.EXCEPTION_FROM_EMAIL && process.env.EXCEPTION_TO_EMAIL){
     var mailOptions = {
@@ -77,7 +78,7 @@ process.on('uncaughtException', function (err) {
     });
   }
 });
-
+*/
 
 
 if (!facebook.ACCESS_TOKEN) {
