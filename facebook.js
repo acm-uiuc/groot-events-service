@@ -37,9 +37,9 @@ function getPageAccessToken(callback) {
     json: true
   }, function(error, response, body) { 
     if (response && response.statusCode == 200) {
-      body.data.forEach(function(item, index) {
+      body.data.forEach(function(item) {
         if (item.id == PAGE_ID) {
-          callback && callback(item.access_token)
+          callback && callback(item.access_token);
         }
       });
     }
