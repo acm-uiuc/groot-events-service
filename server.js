@@ -13,18 +13,9 @@ const app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 const bodyParser = require('body-parser');
-const request = require('request');
 const facebook = require('./facebook.js');
 const winston = require('winston');
 const expressWinston = require('express-winston');
-const nodemailer = require('nodemailer');
-const smtpConfig = {
-  host: 'express-smtp.cites.uiuc.edu',
-  port: 25,
-  secure: false,
-  ignoreTLS: true,
-};
-const transporter = nodemailer.createTransport(smtpConfig);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -55,32 +46,9 @@ io.on('connection', function (socket) {
     socket.emit('facebook events', events);
   });
 });
-/*
-process.on('uncaughtException', function (err) {
-  if(process.env.EXCEPTION_FROM_EMAIL && process.env.EXCEPTION_TO_EMAIL){
-    var mailOptions = {
-      from: process.env.EXCEPTION_FROM_EMAIL, 
-      to: process.env.EXCEPTION_TO_EMAIL,  
-      subject: '[Groot-events-service] Fatal Error: ' + (new Date).toLocaleTimeString(), 
-      text: 'Uncaught Exception: Groot Events Service\n' + err.stack,
-    };
-
-    transporter.sendMail(mailOptions, function(error, info){
-      if(error){
-        console.log(error);
-      }else{
-        console.log('Message sent: ' + info.response);
-      }
-    console.error((new Date).toLocaleTimeString() + ' uncaughtException:', err.message)
-    console.error(err.stack)
-    process.exit(1);
-
-    });
-  }
-});
-*/
 
 
+/* eslint-disable no-console */
 if (!facebook.ACCESS_TOKEN) {
   console.log("ERROR! PAGE ACCESS TOKEN not supplied");
 } else if (!facebook.PAGE_ID) {
@@ -90,3 +58,4 @@ if (!facebook.ACCESS_TOKEN) {
   console.log("Your Facebook Page Access Token and Page ID are present");
   console.log('GROOT EVENTS SERVICES is live on port ' + PORT + "!");
 }
+/* eslint-enable no-console */
