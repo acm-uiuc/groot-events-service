@@ -28,5 +28,7 @@
   "bugs": {
     "url": "https://github.com/acm-uiuc/groot-events-service/issues"
   },
-  "homepage": "https://github.com/acm-uiuc/groot-events-service#readme"
+  "homepage": "https://github.com/acm-uiuc/groot-events-service#readme",
+  "devDependencies": {},
+  "license": "NCSA"
 }
