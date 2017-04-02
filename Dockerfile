@@ -1,4 +1,5 @@
-FROM node:argon
+FROM node:boron
+MAINTAINER ACM@UIUC
 
 # Create app directory
 RUN mkdir -p /usr/src/app
