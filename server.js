@@ -31,13 +31,21 @@ app.use(expressWinston.logger({
 
 app.get('/events', function(req, res) {
   facebook.getEvents(function(raw_events) {
-    res.json(raw_events);
+    if (raw_events.length === 0) {
+      res.json({});
+    } else {
+      res.json(raw_events);
+    }
   });
 });
 
 app.get('/events/upcoming', function(req, res) {
   facebook.getUpcomingEvents(function(events) {
-    res.json(events);
+    if (events.length === 0) {
+      res.json({});
+    } else {
+      res.json(events);
+    }
   });
 });
 
