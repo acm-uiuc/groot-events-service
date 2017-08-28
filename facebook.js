@@ -18,11 +18,11 @@ const PAGE_ID = process.env.FACEBOOK_ACM_PAGE_ID;
 
 function parseEvent(event) {
   if (event.start_time) {
-    event.start_time =  moment(event.start_time).format("MMMM D YYYY, h:mm A");
+    event.start_time =  moment.parseZone(event.start_time).local().format("MMMM D YYYY, h:mm A");
   }
 
   if (event.end_time) {
-    event.end_time =  moment(event.end_time).format("MMMM D YYYY, h:mm A");
+    event.end_time =  moment.parseZone(event.end_time).local().format("MMMM D YYYY, h:mm A");
   }
 
   event.url = "https://www.facebook.com/events/" + event.id;
