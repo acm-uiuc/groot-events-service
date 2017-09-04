@@ -4,7 +4,7 @@
   "description": "An Events service for groot",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "lint": "node_modules/eslint/bin/eslint.js server.js facebook.js"
   },
   "author": "Sameet Sapra",
@@ -16,6 +16,7 @@
     "express-winston": "^2.1.2",
     "moment": "^2.17.1",
     "nodemailer": "^2.7.0",
+    "nodemon": "^1.11.0",
     "path": "^0.12.7",
     "request": "^2.76.0",
     "socket.io": "^1.7.2",
