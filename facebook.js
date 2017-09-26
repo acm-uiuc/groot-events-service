@@ -31,12 +31,14 @@ function parseEvent(event) {
   // The end time for a recurring event is the last scheduled meeting time
   // Only change start and end time for this event for recurring events
   // that are still continuing
-  if (event.event_times && moment.parseZone(event.end_time).local() > today) {
+  if (event.event_times && moment(event.end_time).local() > today) {
     event.recurring_event = true;
 
     // Find the nearest start time and end time to today, and update the start
     // and end times in the parsed event
-    event.event_times.sort((a, b) => {
+    event.event_times = event.event_times.filter((a) => {
+      return moment(a.start_time) > today;
+    }).sort((a, b) => {
       var diff = new Date(a.start_time) - new Date(b.start_time);
       return diff/(Math.abs(diff) || 1);
     });
@@ -104,11 +106,11 @@ function getEvents(callback) {
 }
 
 function getUpcomingEvents(callback) {
-  const today = new Date();
+  const today = moment();
   getRawEvents(function(raw_events) {
     var orderedUpcomingEvents = [];
     for (var event of raw_events) {
-      var eventDate = new Date(event.start_time);
+      var eventDate = moment(event.end_time).local();
       if (today < eventDate) { // an upcoming event
         orderedUpcomingEvents.unshift(parseEvent(event)); //to add to beginning
       }
