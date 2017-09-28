@@ -115,6 +115,11 @@ function getUpcomingEvents(callback) {
         orderedUpcomingEvents.unshift(parseEvent(event)); //to add to beginning
       }
     }
+    orderedUpcomingEvents.sort((a, b) => {
+      var diff = new Date(a.start_time) - new Date(b.start_time);
+      return diff/(Math.abs(diff) || 1);
+    });
+
     callback && callback(orderedUpcomingEvents);
   });
 }
