@@ -42,12 +42,14 @@ function parseEvent(event) {
       var diff = new Date(a.start_time) - new Date(b.start_time);
       return diff/(Math.abs(diff) || 1);
     });
-
-    event.start_time = moment.parseZone(event.event_times[0].start_time)
+    if (event.event_times[0].start_time) {
+      event.start_time = moment.parseZone(event.event_times[0].start_time)
                              .local().format(EVENT_DATE_FORMAT);
-    event.end_time = moment.parseZone(event.event_times[0].end_time)
+    }    
+    if (event.event_times[0].end_time) {
+      event.end_time = moment.parseZone(event.event_times[0].end_time)
                              .local().format(EVENT_DATE_FORMAT);
-
+    }
     if (event.event_times.length > 1) {
       event.next_event_start_time =
         moment.parseZone(event.event_times[1].end_time)
